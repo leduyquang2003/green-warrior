@@ -1,0 +1,95 @@
+{
+  "auth": {
+    "login": {
+      "username_or_password_is_wrong": "Invalid login information.",
+      "username_required": "Username is required.",
+      "password_required": "Password is required.",
+      "username_is_string": "Username must be a string.",
+      "password_is_string": "Password must be a string.",
+      "credentials_invalid": "Invalid credentials."
+    },
+    "change_pass": {
+      "old_password_is_wrong": "Old password is incorrect.",
+      "required_new_password": "New password is required.",
+      "required_old_password": "Old password is required.",
+      "required_confirm_password": "Please confirm the new password.",
+      "confirm_password_not_match": "The confirmed password does not match."
+    }
+  },
+  "system": {
+    "unkown": "Server error.",
+    "forbidden": "Access is forbidden"
+  },
+  "category": {
+    "create": {
+      "length_of_name_is_invalid": "Name length is invalid.",
+      "name_is_string": "Name must be a string.",
+      "name_is_required": "Name is required.",
+      "name_is_exist": "Name already exists."
+    },
+    "update": {
+      "status_is_invalid": "Status is invalid.",
+      "status_is_required": "Status is required.",
+      "length_of_name_is_invalid": "Name length is invalid.",
+      "name_is_string": "Name must be a string.",
+      "name_is_required": "Name is required.",
+      "id_is_invalid": "ID is invalid.",
+      "id_is_required": "ID is required.",
+      "category_not_found": "Category not found.",
+      "name_is_exist": "Name already exists."
+    },
+    "delete": {
+      "id_is_invalid": "ID is invalid.",
+      "id_is_required": "ID is required.",
+      "category_not_found": "Category not found."
+    }
+  },
+  "user": {
+    "create_user_admin": {
+      "length_of_fullname_is_invalid": "Full name length is invalid.",
+      "fullname_is_required": "Full name is required.",
+      "length_of_username_is_invalid": "Username length is invalid.",
+      "username_is_required": "Username is required.",
+      "password_is_required": "Password is required.",
+      "length_of_email_is_invalid": "Email length is invalid.",
+      "username_is_exist": "Username already exists.",
+      "email_is_exist": "Email already exists."
+    },
+    "update_user_admin": {
+      "length_of_fullname_is_invalid": "Full name length is invalid.",
+      "fullname_is_required": "Full name is required.",
+      "length_of_email_is_invalid": "Email length is invalid.",
+      "status_is_invalid": "Status is invalid.",
+      "status_is_required": "Status is required.",
+      "user_not_found": "User not found.",
+      "email_is_exist": "Email already exists."
+    },
+    "delete_user_admin": {
+      "user_not_found": "User not found."
+    },
+    "update_profile_admin": {
+      "length_of_fullname_is_invalid": "Full name length is invalid.",
+      "fullname_is_required": "Full name is required.",
+      "length_of_email_is_invalid": "Email length is invalid.",
+      "address_is_string": "Address must be a string.",
+      "address_is_required": "Address is required.",
+      "avatar_id_is_invalid": "Avatar ID is invalid.",
+      "avatar_id_is_required": "Avatar ID is required.",
+      "date_of_birth_is_invalid": "Date of birth is invalid.",
+      "avatar_not_found": "Avatar not found.",
+      "email_is_exist": "Email already exists."
+    },
+    "update_profile": {
+      "length_of_fullname_is_invalid": "Full name length is invalid.",
+      "fullname_is_required": "Full name is required.",
+      "length_of_email_is_invalid": "Email length is invalid.",
+      "address_is_string": "Address must be a string.",
+      "address_is_required": "Address is required.",
+      "avatar_id_is_invalid": "Avatar ID is invalid.",
+      "avatar_id_is_required": "Avatar ID is required.",
+      "date_of_birth_is_invalid": "Date of birth is invalid.",
+      "avatar_not_found": "Avatar not found.",
+      "email_is_exist": "Email already exists."
+    }
+  }
+}

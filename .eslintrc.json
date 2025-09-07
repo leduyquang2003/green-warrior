@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-empty-function": "error",
+    "@typescript-eslint/no-unsupported-features": "off",
+    "no-empty": "error",
+    "no-unused-vars": "error",
+    "no-compare-neg-zero": "error",
+    "import/no-unresolved": "error"
+  }
+}

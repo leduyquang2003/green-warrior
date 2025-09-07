@@ -1,0 +1,97 @@
+{
+  "auth": {
+    "login": {
+      "username_or_password_is_wrong": "Thông tin đăng nhập không hợp lệ.",
+      "username_required": "Username là bắt buộc",
+      "password_required": "Mật khẩu là bắt buộc",
+      "username_is_string": "Username phải là chuỗi",
+      "password_is_string": "Mật khẩu phải là chuỗi",
+      "credentials_invalid": "Thông tin xác thực không hợp lệ"
+    },
+    "change_pass": {
+      "old_password_is_wrong": "Mật khẩu cũ không đúng",
+      "required_new_password": "Mật khẩu mới là bắt buộc",
+      "required_old_password": "Mật khẩu cũ là bắt buộc",
+      "required_confirm_password": "Nhập lại mật khẩu mới",
+      "confirm_password_not_match": "Nhập lại mật khẩu mới"
+    }
+  },
+
+  "system": {
+    "unkown": "Lỗi máy chủ.",
+    "forbidden": "Truy cập bị cấm"
+  },
+
+  "category": {
+    "create": {
+      "length_of_name_is_invalid": "Độ dài của tên không hợp lệ",
+      "name_is_string": "Tên phải là một chuỗi ký tự",
+      "name_is_required": "Tên là bắt buộc",
+      "name_is_exist": "Tên đã tồn tại"
+    },
+    "update": {
+      "status_is_invalid": "Trạng thái không hợp lệ",
+      "status_is_required": "Trạng thái là bắt buộc",
+      "length_of_name_is_invalid": "Độ dài của tên không hợp lệ",
+      "name_is_string": "Tên phải là một chuỗi ký tự",
+      "name_is_required": "Tên là bắt buộc",
+      "id_is_invalid": "Id không hợp lệ",
+      "id_is_required": "Id là bắt buộc",
+      "category_not_found": "Không tìm thấy danh mục công việc",
+      "name_is_exist": "Tên đã tồn tại"
+    },
+    "delete ": {
+      "id_is_invalid": "Id không hợp lệ",
+      "id_is_required": "Id là bắt buộc",
+      "category_not_found": "Không tìm thấy danh mục công việc"
+    }
+  },
+  "user": {
+    "create_user_admin": {
+      "length_of_fullname_is_invalid": "Độ dài của họ tên không hợp lệ.",
+      "fullname_is_required": "Họ tên là bắt buộc.",
+      "length_of_username_is_invalid": "Độ dài của tên người dùng không hợp lệ.",
+      "username_is_required": "Tên người dùng là bắt buộc.",
+      "password_is_required": "Mật khẩu là bắt buộc.",
+      "length_of_email_is_invalid": "Độ dài của email không hợp lệ.",
+      "username_is_exist": "Tên người dùng đã tồn tại.",
+      "email_is_exist": "Email đã tồn tại."
+    },
+    "update_user_admin": {
+      "length_of_fullname_is_invalid": "Độ dài của họ tên không hợp lệ.",
+      "fullname_is_required": "Họ tên là bắt buộc.",
+      "length_of_email_is_invalid": "Độ dài của email không hợp lệ.",
+      "status_is_invalid": "Trạng thái không hợp lệ.",
+      "status_is_required": "Trạng thái là bắt buộc.",
+      "user_not_found": "Không tìm thấy người dùng.",
+      "email_is_exist": "Email đã tồn tại."
+    },
+    "delete_user_admin": {
+      "user_not_found": "Không tìm thấy người dùng."
+    },
+    "update_profile_admin": {
+      "length_of_fullname_is_invalid": "Độ dài của họ tên không hợp lệ.",
+      "fullname_is_required": "Họ tên là bắt buộc.",
+      "length_of_email_is_invalid": "Độ dài của email không hợp lệ.",
+      "address_is_string": "Địa chỉ phải là chuỗi.",
+      "address_is_required": "Địa chỉ là bắt buộc.",
+      "avatar_id_is_invalid": "ID ảnh đại diện không hợp lệ.",
+      "avatar_id_is_required": "ID ảnh đại diện là bắt buộc.",
+      "date_of_birth_is_invalid": "Ngày sinh không hợp lệ.",
+      "avatar_not_found": "Không tìm thấy ảnh đại diện.",
+      "email_is_exist": "Email đã tồn tại."
+    },
+    "update_profile": {
+      "length_of_fullname_is_invalid": "Độ dài của họ tên không hợp lệ.",
+      "fullname_is_required": "Họ tên là bắt buộc.",
+      "length_of_email_is_invalid": "Độ dài của email không hợp lệ.",
+      "address_is_string": "Địa chỉ phải là chuỗi.",
+      "address_is_required": "Địa chỉ là bắt buộc.",
+      "avatar_id_is_invalid": "ID ảnh đại diện không hợp lệ.",
+      "avatar_id_is_required": "ID ảnh đại diện là bắt buộc.",
+      "date_of_birth_is_invalid": "Ngày sinh không hợp lệ.",
+      "avatar_not_found": "Không tìm thấy ảnh đại diện.",
+      "email_is_exist": "Email đã tồn tại."
+    }
+  }
+}
