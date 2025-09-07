@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import {
   StackedCarousel,
   ResponsiveContainer,
 } from "react-stacked-center-carousel";
 import { Slide } from "./Slide";
-import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
-import { useIsDesktop, useIsMobile, useIsTablet } from "@/hooks/useMediaQuery";
+import { CircleArrowLeft } from "lucide-react";
+// import { useIsDesktop, useIsMobile, useIsTablet } from "@/hooks/useMediaQuery";
 
 const data = [
   {
@@ -30,15 +30,15 @@ const data = [
 
 type CarouselRef = { goNext: () => void; goBack: () => void };
 
-const StackedCarouselContainer = () => {
+const StackedCarouselContainer = ({ startDelay = 10000 }: { startDelay?: number }) => {
   const ref = useRef<CarouselRef | null>(null);
   const intervalRef = useRef<number | null>(null);
   const timeoutRef = useRef<number | null>(null);
-  const [cycle, setCycle] = useState(0);
+  // const [cycle, setCycle] = useState(0);
 
-  const isMobile = useIsMobile();
-  const isTablet = useIsTablet();
-  const isDesktop = useIsDesktop();
+  // const isMobile = useIsMobile();
+  // const isTablet = useIsTablet();
+  // const isDesktop = useIsDesktop();
 
 //   const goNext = useCallback(() => {
 //     ref.current?.goNext();
@@ -49,17 +49,31 @@ const StackedCarouselContainer = () => {
   }, []);
 
   useEffect(() => {
-    // Start auto-advance 3s after mount, then every 2s
+    // Start auto-advance after startDelay ms, then every 3s.
+    // Stop the repeating interval after it fires twice.
+    // clear any existing timers first (safety)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
     timeoutRef.current = window.setTimeout(() => {
       ref.current?.goBack();
-      if (cycle < 3) {
-        intervalRef.current = window.setInterval(() => {
-          ref.current?.goBack();
-          setCycle((prev) => prev + 1);
-        }, 3000);
-        console.log("started interval");
-      }
-    }, 3000);
+
+      let runs = 0;
+      intervalRef.current = window.setInterval(() => {
+        ref.current?.goBack();
+        runs += 1;
+        if (runs >= 1 && intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      }, 3000);
+    }, startDelay);
 
     return () => {
       if (timeoutRef.current) {
@@ -71,7 +85,7 @@ const StackedCarouselContainer = () => {
         intervalRef.current = null;
       }
     };
-  }, []);
+  }, [startDelay]);
 
   return (
     <div className="flex h-full w-full">
@@ -97,8 +111,8 @@ const StackedCarouselContainer = () => {
             );
           }}
         />
-        <div className="absolute left-0 bottom-[50%]" onClick={() => goBack()}>
-            <CircleArrowLeft />
+        <div className="absolute left-0 bottom-0 h-full" onClick={() => goBack()}>
+            <CircleArrowLeft className="size-20 opacity-0"/>
         </div>
       </div>
     </div>
