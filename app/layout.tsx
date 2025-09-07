@@ -75,7 +75,7 @@ export default async function RootLayout({
       <body className={beVietnamPro.className + " font-normal "}>
         <NextIntlClientProvider messages={messages}>
           <CMainLayout>
-            <Image src={"/bg.png"} alt="background" className="absolute inset-0 object-cover w-full h-full -z-10" width={1920} height={1080} />
+            <img src={"/bg.png"} alt="background" className="absolute inset-0 object-cover w-full h-full -z-10" />
             {children}
             </CMainLayout>
           <ToastContainer
