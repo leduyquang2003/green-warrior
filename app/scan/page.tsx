@@ -46,10 +46,52 @@ export default function ScanPage() {
         if (!navigator.mediaDevices?.getUserMedia) {
           throw new Error("Camera API not supported by this browser.");
         }
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: "environment" } },
-          audio: false,
-        });
+        let stream: MediaStream | null = null;
+        try {
+          // strict front camera
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { exact: "user" } },
+            audio: false,
+          });
+        } catch (e: unknown) {
+          const name = (e as Error)?.name;
+          if (name === "OverconstrainedError" || name === "NotFoundError") {
+            // relax to ideal front camera
+            try {
+              stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: { ideal: "user" } },
+                audio: false,
+              });
+            } catch {
+              // as a last resort, pick a deviceId that looks like front/user
+              try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const frontCam = devices.find(
+                  (d) =>
+                    d.kind === "videoinput" &&
+                    /front|user|face|true/i.test(d.label)
+                );
+                if (frontCam) {
+                  stream = await navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: { exact: frontCam.deviceId } },
+                    audio: false,
+                  });
+                }
+              } catch {
+                // keep stream null; will be handled below
+              }
+            }
+          } else {
+            throw e;
+          }
+        }
+        if (!stream) {
+          // Final fallback: let the browser choose a camera (still might be front on some devices)
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+        }
 
         // clear any pending retry
         if (retryTimeoutRef.current) {
@@ -79,10 +121,8 @@ export default function ScanPage() {
           try {
             await videoRef.current.play();
           } catch (playErr: unknown) {
-            // DOMException names vary by browser; treat AbortError as transient
             const name = (playErr as Error)?.name;
             if (name === "AbortError" || name === "NotAllowedError") {
-              // if NotAllowedError, it's a permission issue — surface to user
               if (name === "NotAllowedError") {
                 setError("Permission to use the camera was denied.");
                 stopCamera();
@@ -211,15 +251,45 @@ export default function ScanPage() {
   // Handle auto scroll when result is shown
   const [showCard, setShowCard] = useState(true);
 
+  // useEffect(() => {
+  //   if (!result) {
+  //     setShowCard(false);
+  //     return;
+  //   }
+  //   setShowCard(true);
+  //   const t = setTimeout(() => setShowCard(false), 5000);
+  //   return () => clearTimeout(t);
+  // }, [result]);
+
+  // Show the card when result exists; do not auto-hide
   useEffect(() => {
-    if (!result) {
-      setShowCard(false);
-      return;
-    }
-    setShowCard(true);
-    const t = setTimeout(() => setShowCard(false), 5000);
-    return () => clearTimeout(t);
+    setShowCard(!!result);
   }, [result]);
+
+  const onFeedback = useCallback(
+    (isCorrect: boolean) => {
+      if (isCorrect) {
+        // proceed to carousel
+        setShowCard(false);
+      } else {
+        // restart scanning
+        setShowCard(false);
+        reset();
+        startCamera();
+      }
+    },
+    [reset, startCamera]
+  );
+
+ // Auto-return home 10s after the result card collapses (carousel visible)
+ useEffect(() => {
+   if (!result || showCard) return;
+   const t = window.setTimeout(() => {
+     reset();
+     router.replace("/");
+   }, 10000);
+   return () => clearTimeout(t);
+ }, [result, showCard, reset, router]);
 
   return (
     <main className="min-h-screen h-screen w-screen">
@@ -256,7 +326,7 @@ export default function ScanPage() {
               {isProcessing && (
                 <div className="mt-4 flex items-center gap-3 text-gray-700">
                   <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-green-600" />
-                  <span>Processing...</span>
+                  <span>Phân tích...</span>
                 </div>
               )}
 
@@ -273,7 +343,7 @@ export default function ScanPage() {
                   onClick={startCamera}
                   className="px-4 py-2 rounded-md bg-green-700 text-white hover:bg-green-800 disabled:opacity-50"
                 >
-                  Turn on camera
+                  Mở camera
                 </button>
               )}
 
@@ -283,7 +353,7 @@ export default function ScanPage() {
                     onClick={capture}
                     className="px-4 py-2 rounded-md bg-green-700 text-white hover:bg-green-800 disabled:opacity-50"
                   >
-                    Capture
+                    Chụp
                   </button>
                   {/* <button
                     onClick={stopCamera}
@@ -299,7 +369,7 @@ export default function ScanPage() {
                   onClick={reset}
                   className="px-4 py-2 rounded-md bg-gray-100 text-gray-800 hover:bg-gray-200"
                 >
-                  Reset
+                  Tải lại
                 </button>
               )}
             </div>
@@ -327,6 +397,22 @@ export default function ScanPage() {
               />
               <Search className="absolute text-[#75A08C] -bottom-10 -left-10 size-24" />
             </div>
+
+            {/* Feedback actions */}
+            <div className="mt-16 flex items-center gap-3">
+              <button
+                onClick={() => onFeedback(true)}
+                className="px-4 py-2 rounded-md bg-green-700 text-white hover:bg-green-800"
+              >
+                Đúng ròi nhé
+              </button>
+              <button
+                onClick={() => onFeedback(false)}
+                className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+              >
+                Sai ròi phải quét lại thôi!!!
+              </button>
+            </div>
           </div>
 
           {/* after that grow StackedCarouselContainer */}
@@ -335,7 +421,7 @@ export default function ScanPage() {
             className={`${showCard ? "w-0 flex-grow-0 flex-shrink-0 opacity-0" : "flex-1 opacity-100"} transition-all duration-500`}
           >
             <StackedCarouselContainer startDelay={5000}/>
-            <div className="w-full flex items-center justify-center gap-4">
+            {/* <div className="w-full flex items-center justify-center gap-4">
               <button
                 onClick={() => {
                   setShowCard(true);
@@ -346,7 +432,7 @@ export default function ScanPage() {
               >
                 Home
               </button>
-            </div>
+            </div> */}
           </div>
           )}
         </div>
