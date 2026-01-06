@@ -10,7 +10,7 @@ const cards: Card[] = [
 ];
 
 const CARD_W_COLLAPSED = 999;
-const CARD_W_EXPANDED = 600;
+const CARD_W_EXPANDED = 599;
 const A_HEIGHT = 300;
 const BC_HEIGHT = 300;
 const REVEAL_OFFSET = 100; // adjust so ~1/3 is revealed visually
