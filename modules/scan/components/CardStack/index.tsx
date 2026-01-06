@@ -9,7 +9,7 @@ const cards: Card[] = [
   { id: 3, title: "C", color: "bg-yellow-500" },
 ];
 
-const CARD_W_COLLAPSED = 111;
+const CARD_W_COLLAPSED = 999;
 const CARD_W_EXPANDED = 600;
 const A_HEIGHT = 300;
 const BC_HEIGHT = 300;
